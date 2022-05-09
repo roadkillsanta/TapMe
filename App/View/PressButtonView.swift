@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-
-
 struct PressButtonView: View{
 	//@State var isPressed : Bool = false
 	var scale : CGFloat

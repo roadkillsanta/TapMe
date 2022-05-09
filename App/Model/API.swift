@@ -28,7 +28,7 @@ class API: ObservableObject{
 		let timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateGlobal), userInfo: nil, repeats: true)
 	}
 	func readpresses(completion: @escaping (Response) -> ()){
-		guard let url = URL(string: "https://Press-Me-API.roadkillsanta.repl.co/api/\(deviceID)") else {return}
+		guard let url = URL(string: "https://api.pgang.org/api/\(deviceID)") else {return}
 
 		URLSession.shared.dataTask(with: url) { (data, response, errors) in
 			guard let data = data else {return}
@@ -42,7 +42,7 @@ class API: ObservableObject{
 		}.resume()
 	}
 	func writepresses(completion: @escaping (UInt64) -> ()) {
-		guard let url = URL(string: "https://Press-Me-API.roadkillsanta.repl.co/api/\(deviceID)/setpresses/\(presses)") else {return}
+		guard let url = URL(string: "https://api.pgang.org/api/\(deviceID)/setpresses/\(presses)") else {return}
 
 		URLSession.shared.dataTask(with: url) { (data, response, errors) in
 			guard let data = data else {return}
