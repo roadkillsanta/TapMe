@@ -10,10 +10,12 @@ import SwiftUI
 struct UpgradeView: View {
     var body: some View {
 		VStack{
-			Image(systemName: "hammer")
-				.resizable()
-				.scaledToFit()
-				.frame(width: 150, height: 150, alignment: Alignment.center)
+			Button(action: {print("penis")}){
+				Image(systemName: "hammer")
+					.resizable()
+					.scaledToFit()
+					.frame(width: 150, height: 150, alignment: Alignment.center)
+			}
 			Text("Coming Soon!").padding()
 		}
     }

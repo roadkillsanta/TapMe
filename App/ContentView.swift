@@ -13,18 +13,21 @@ struct ContentView: View {
 	@State var tabState = 1
 	@State var scale : CGFloat = 0.8
     var body: some View {
-		TabView(selection: $tabState) {
-			SettingsView().environmentObject(settings).tabItem {
-				Label("Settings", systemImage: "gear")
-			}.tag(0)
-			PressButtonView(api: API, settings: settings).tabItem {
-				Label("Button", systemImage: "play.circle")
-			}.tag(1)
-			UpgradeView().tabItem{
-				Label("Upgrades", systemImage: "arrow.up.circle")
-			}.tag(2)
+		ZStack{
+			Rectangle().frame(width:.infinity, height: .infinity).foregroundColor(settings.bgColor)
+			TabView(selection: $tabState) {
+				SettingsView().environmentObject(settings).tabItem {
+					Label("Settings", systemImage: "gear.circle")
+				}.tag(0)
+				PressButtonView(api: API, settings: settings).tabItem {
+					Label("Button", systemImage: "play.circle")
+				}.tag(1)
+				UpgradeView().tabItem{
+					Label("Upgrades", systemImage: "arrow.up.circle")
+				}.tag(2)
+			}
 		}
-    }
+	}
 }
 
 struct ContentView_Previews: PreviewProvider {
