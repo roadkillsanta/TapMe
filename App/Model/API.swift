@@ -2,7 +2,7 @@
 //  API.swift
 //  App
 //
-//  Created by Eric on 5/8/22.
+//  Created by Me on 5/8/22.
 //
 
 import Foundation
@@ -12,7 +12,6 @@ struct Response: Decodable{
 	var global : UInt64
 	var local : UInt64
 }
-
 
 class API: ObservableObject{
 	@Published var presses : UInt64
@@ -28,7 +27,7 @@ class API: ObservableObject{
 		let timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateGlobal), userInfo: nil, repeats: true)
 	}
 	func readpresses(completion: @escaping (Response) -> ()){
-		guard let url = URL(string: "https://api.pgang.org/api/\(deviceID)") else {return}
+		guard let url = URL(string: "https://api.pgang.org/user/\(deviceID)") else {return}
 
 		URLSession.shared.dataTask(with: url) { (data, response, errors) in
 			guard let data = data else {return}
@@ -42,7 +41,7 @@ class API: ObservableObject{
 		}.resume()
 	}
 	func writepresses(completion: @escaping (UInt64) -> ()) {
-		guard let url = URL(string: "https://api.pgang.org/api/\(deviceID)/setpresses/\(presses)") else {return}
+		guard let url = URL(string: "https://api.pgang.org/user/\(deviceID)/setpresses/\(presses)") else {return}
 
 		URLSession.shared.dataTask(with: url) { (data, response, errors) in
 			guard let data = data else {return}
@@ -66,5 +65,22 @@ class API: ObservableObject{
 		writepresses(completion: {global in
 			self.globalpresses = global
 		})
+	}
+}
+
+class Settings: ObservableObject{
+	@Published var bgColor : Color = Color(UIColor.white)
+	@Published var btnColor : Color = Color(UIColor.systemCyan)
+	@Published var txtColor : Color = Color(UIColor.white)
+	@Published var displayColor : Color = Color(UIColor.gray)
+	@State var scale : CGFloat = 0.8
+	init(){
+		
+	}
+	func reset(){
+		self.bgColor = Color(UIColor.white)
+		self.btnColor = Color(UIColor.systemCyan)
+		self.txtColor = Color(UIColor.white)
+		self.scale = 0.8
 	}
 }

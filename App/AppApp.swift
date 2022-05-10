@@ -2,7 +2,7 @@
 //  AppApp.swift
 //  App
 //
-//  Created by Eric on 5/8/22.
+//  Created by Me on 5/8/22.
 //
 
 import SwiftUI
@@ -10,9 +10,10 @@ import SwiftUI
 @main
 struct AppApp: App {
 	@StateObject var api = API()
+	@StateObject var settings = Settings()
     var body: some Scene {
         WindowGroup {
-			ContentView(API: api)
+			ContentView(API: api, settings: settings)
         }
     }
 }
