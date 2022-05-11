@@ -14,7 +14,7 @@ struct ContentView: View {
 	@State var scale : CGFloat = 0.8
     var body: some View {
 		ZStack{
-			Rectangle().frame(width:.infinity, height: .infinity).foregroundColor(settings.bgColor)
+			//Rectangle().frame(width:.infinity, height: .infinity).foregroundColor(settings.bgColor)
 			TabView(selection: $tabState) {
 				SettingsView().environmentObject(settings).tabItem {
 					Label("Settings", systemImage: "gear.circle")

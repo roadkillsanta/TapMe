@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import Haptica
 
 struct Response: Decodable{
 	var global : UInt64

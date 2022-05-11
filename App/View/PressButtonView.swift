@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Haptica
 
 struct PressButtonView: View{
 	//@State var isPressed : Bool = false
