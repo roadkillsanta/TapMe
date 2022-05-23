@@ -41,7 +41,7 @@ struct PressButtonView: View{
 						.foregroundColor(settings.txtColor)
 				}
 			}
-		}.padding(EdgeInsets(top: 80, leading: 0, bottom: 0, trailing: 0))
+		}.padding(EdgeInsets(top: 0.16*UIScreen.main.bounds.height, leading: 0, bottom: 0, trailing: 0))
 		ZStack{
 			Circle()
 				.frame(width: UIScreen.main.bounds.width * settings.scale, height: UIScreen.main.bounds.width  * settings.scale, alignment: Alignment.center)
