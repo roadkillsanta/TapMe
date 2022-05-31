@@ -14,10 +14,10 @@ struct ContentView: View {
 	@State var scale : CGFloat = 0.8
     var body: some View {
 		ZStack{
-			//Rectangle().frame(width:.infinity, height: .infinity).foregroundColor(settings.bgColor)
+			Rectangle().foregroundColor(settings.bgColor)
 			TabView(selection: $tabState) {
 				SettingsView().environmentObject(settings).tabItem {
-					Label("Settings", systemImage: "gear.circle")
+					Label("Settings", systemImage: "gear")
 				}.tag(0)
 				PressButtonView(api: API, settings: settings).tabItem {
 					Label("Button", systemImage: "play.circle")
@@ -25,7 +25,7 @@ struct ContentView: View {
 				UpgradeView().tabItem{
 					Label("Upgrades", systemImage: "arrow.up.circle")
 				}.tag(2)
-			}
+			}.padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
 		}
 	}
 }
