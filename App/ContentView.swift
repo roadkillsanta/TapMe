@@ -20,12 +20,12 @@ struct ContentView: View {
 					Label("Settings", systemImage: "gear")
 				}.tag(0)
 				PressButtonView(api: API, settings: settings).tabItem {
-					Label("Button", systemImage: "play.circle")
+					Label("Fidget", systemImage: "play.circle")
 				}.tag(1)
-				UpgradeView().tabItem{
-					Label("Upgrades", systemImage: "arrow.up.circle")
+				TrackerView(api: API).tabItem{
+					Label("Tracker", systemImage: "chart.bar")
 				}.tag(2)
-			}.padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
+			}.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
 		}
 	}
 }

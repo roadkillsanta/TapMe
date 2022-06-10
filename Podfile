@@ -7,6 +7,7 @@ target 'App' do
 
   # Pods for App
   pod "Haptica"
+  pod "Charts"
   target 'AppTests' do
     inherit! :search_paths
     # Pods for testing
