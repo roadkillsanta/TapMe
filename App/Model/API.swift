@@ -18,25 +18,33 @@ struct timedtaps: Decodable{
 	}
 }
 
+struct history : Decodable{
+	var data : [String : [String : [String : Int]]]
+	var last : [timedtaps]
+}
+
 struct Response: Decodable{
 	var global : UInt64
 	var local : UInt64
-	var today : [timedtaps]
+	var history : history
 }
 
 class API: ObservableObject{
 	@Published var presses : UInt64
 	@Published var globalpresses : UInt64
+	@Published var history : [String : [String : [String : Int]]]
 	@Published var today : [timedtaps]
 	var deviceID = UIDevice.current.identifierForVendor!.uuidString
 	init(){
 		self.presses = 0
 		self.globalpresses = 0
+		self.history = [:]
 		self.today = []
 		readpresses(completion: {response in
 			self.presses = response.local
 			self.globalpresses = response.global
-			self.today = response.today
+			self.history = response.history.data
+			self.today = response.history.last
 		})
 		let timer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(self.updateGlobal), userInfo: nil, repeats: true)
 	}
@@ -100,7 +108,8 @@ class API: ObservableObject{
 	@objc func updateGlobal(){
 		readpresses(completion: {response in
 			self.globalpresses = response.global
-			self.today = response.today
+			self.history = response.history.data
+			self.today = response.history.last
 		})
 	}
 	func press(){
@@ -111,6 +120,29 @@ class API: ObservableObject{
 	}
 	@IBAction func notify() {
 		NotificationCenter.default.post(name: Notification.Name(rawValue: "API updated!"), object: self)
+	}
+	func getStats(){
+		var returndata : [String:Int] = [:]
+		let year = Calendar.current.component(.year, from: Date())
+		let month = Calendar.current.component(.month, from: Date())
+		let day = Calendar.current.component(.day, from: Date())
+		var thismonth = false
+		for (key, value) in history{
+			for(key, value) in value{
+				if(Int(key) +1 == month){
+					thismonth = true
+				}
+				else{
+					thismonth = false
+				}
+				for (key, value) in value{
+					if(thismonth){
+						returndata["month"] = returndata["month"] ?? 0 + value
+					}
+					returndata["year"] = returndata["year"] ?? 0 + value
+				}
+			}
+		}
 	}
 }
 
