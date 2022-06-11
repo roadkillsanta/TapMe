@@ -29,6 +29,10 @@ struct SettingsView: View {
 					VStack{
 						Toggle("Data Saver", isOn: $api.saveData)
 						Toggle("Offline Mode", isOn: $api.offline).disabled(!api.saveData)
+						Slider(
+							value: $api.syncInterval,
+							in: 1...10
+						)
 						HStack{
 							Text("Version ")
 							Spacer()
