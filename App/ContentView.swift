@@ -16,7 +16,7 @@ struct ContentView: View {
 		ZStack{
 			Rectangle().foregroundColor(settings.bgColor)
 			TabView(selection: $tabState) {
-				SettingsView().environmentObject(settings).tabItem {
+				SettingsView(settings: settings, api: API).tabItem {
 					Label("Settings", systemImage: "gear")
 				}.tag(0)
 				PressButtonView(api: API, settings: settings).tabItem {

@@ -34,12 +34,16 @@ class API: ObservableObject{
 	@Published var globalpresses : UInt64
 	@Published var history : [String : [String : [String : Int]]]
 	@Published var today : [timedtaps]
+	@Published var saveData : Bool
+	@Published var offline : Bool
 	var deviceID = UIDevice.current.identifierForVendor!.uuidString
 	init(){
 		self.presses = 0
 		self.globalpresses = 0
 		self.history = [:]
 		self.today = []
+		self.saveData = false
+		self.offline = false
 		readpresses(completion: {response in
 			self.presses = response.local
 			self.globalpresses = response.global
@@ -121,28 +125,47 @@ class API: ObservableObject{
 	@IBAction func notify() {
 		NotificationCenter.default.post(name: Notification.Name(rawValue: "API updated!"), object: self)
 	}
-	func getStats(){
-		var returndata : [String:Int] = [:]
-		let year = Calendar.current.component(.year, from: Date())
-		let month = Calendar.current.component(.month, from: Date())
-		let day = Calendar.current.component(.day, from: Date())
-		var thismonth = false
-		for (key, value) in history{
-			for(key, value) in value{
-				if(Int(key) +1 == month){
-					thismonth = true
-				}
-				else{
-					thismonth = false
-				}
-				for (key, value) in value{
-					if(thismonth){
-						returndata["month"] = returndata["month"] ?? 0 + value
+	func getDetailedStats() -> [String: [Int]]{
+		var calendar = Calendar(identifier: .gregorian)
+		calendar.timeZone = TimeZone(identifier: "UTC")!
+		let cday = calendar.component(.day, from: Date())
+		let daynum = calendar.dateComponents([.weekday], from: Date()).weekday ?? 0
+		var day = [0]
+		var week = [0, 0, 0, 0, 0, 0, 0]
+		var month = [Int](repeating: 0, count: calendar.range(of: .day, in: .month, for: Date())!.count)
+		var year = [Int](repeating: 0, count: 12)
+		for (key, value) in history{//years
+			let cyear = Int(key) ?? 0
+			for(key, value) in value{//months
+				let cmonth = Int(key) ?? 0
+				for (key, value) in value{//days
+					guard let keyvalue = Int(key) else{
+						print("no")
+						continue
 					}
-					returndata["year"] = returndata["year"] ?? 0 + value
+					if(cmonth == calendar.component(.month, from: Date())-1 && cyear == calendar.component(.year, from: Date())){//if the current month in the loop is equal to the current month in real-time
+						if(keyvalue <= cday+7-daynum && keyvalue > cday-daynum){//if the day is in this week
+							if(keyvalue == cday){//if it's today
+								day[0] = value
+							}
+							week[keyvalue-cday+daynum-1] = value
+						}
+						month[keyvalue-1] = value //if the int resolves to nil, it becomes 0. assign this junk value to the 0 slot (it will go unused)
+					}
+					year[cmonth] = year[cmonth]+value //this works because the month stored serverside begins at 0.
 				}
 			}
 		}
+		return ["day": day, "week" : week, "month" : month, "year" : year];
+	}
+	func getStats() -> [String:Int]{
+		let data = getDetailedStats()
+		var returndata : [String: Int] = [:]
+		returndata["day"] = data["day"]?.reduce(0, +)
+		returndata["week"] = data["week"]?.reduce(0, +)
+		returndata["month"] = data["month"]?.reduce(0, +)
+		returndata["year"] = data["year"]?.reduce(0, +)
+		return returndata;
 	}
 }
 

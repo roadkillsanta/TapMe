@@ -31,14 +31,12 @@ struct BarChart: UIViewRepresentable{
 	
 		return dateFormatter.string(from: date)
 	}
-	func configure(chart: BarChartView, scale : String){
-		chart.noDataText = "Data Unavailable"
+	func tfhourview(chart: BarChartView) -> [BarChartDataEntry]{//24 hour bar chart view
 		var dataEntries:[BarChartDataEntry] = []
-		var values = API.today
-		var hours : [String] = [""]
+		let values = API.today
 		var yesterday = false;
 		for i in 0..<values.count{
-			let tapstruct : timedtaps = values[i] ?? timedtaps()
+			let tapstruct : timedtaps = values[i]
 			let date = UTCtolocal(date: Date(timeIntervalSince1970: tapstruct.timestamp/1000))
 			var x = Double(date) ?? 0
 			let y = Double(tapstruct.taps)
@@ -47,31 +45,46 @@ struct BarChart: UIViewRepresentable{
 			}
 			// print(forX[i])
 			// let dataEntry = BarChartDataEntry(x: (forX[i] as NSString).doubleValue, y: Double(unitsSold[i]))
-			let dataEntry = BarChartDataEntry(x: x, y: y , data: hours as AnyObject?)
+			let dataEntry = BarChartDataEntry(x: x, y: y)
 			dataEntries.append(dataEntry)
-			print("x: \(x), y: \(y)")
 			if(x == 0){
 				yesterday = true;
 			}
 		}
-		print("_____________________")
+		return dataEntries
+	}
+	func othertimeview(chart: BarChartView, timescale : String) -> [BarChartDataEntry]{//week bar chart view
+		var dataEntries:[BarChartDataEntry] = []
+		let values = API.getDetailedStats()[timescale.lowercased()] ?? [0]
+		var yesterday = false;
+		for i in 0..<(values.count){
+			var x = Double(i+1)
+			let y = Double(values[i])
+			// print(forX[i])
+			// let dataEntry = BarChartDataEntry(x: (forX[i] as NSString).doubleValue, y: Double(unitsSold[i]))
+			let dataEntry = BarChartDataEntry(x: x, y: y)
+			dataEntries.append(dataEntry)
+			if(x == 0){
+				yesterday = true;
+			}
+		}
+		return dataEntries
+	}
+	func configure(chart: BarChartView, scale : String){
+		chart.noDataText = "Data Unavailable"
+		var dataEntries:[BarChartDataEntry] = []
+		var barWidth = Double(1)
+		if(scale == "Last 24h"){
+			dataEntries = tfhourview(chart: chart)
+			barWidth = Double(100)
+		}
+		else{
+			dataEntries = othertimeview(chart: chart, timescale: scale)
+			barWidth = Double(1)
+		}
 		let chartDataSet = BarChartDataSet(entries: dataEntries, label: "taps")
 		let chartData = BarChartData(dataSet: chartDataSet)
-		chartData.barWidth = Double(100)
+		chartData.barWidth = barWidth
 		chart.data = chartData
-	}
-	func dataFromTimescale(timescale : String){
-		/*if(timescale == "Last 24h"){
-			
-		}*/
-		if(timescale == "Week"){
-			
-		}
-		else if(timescale == "Month"){
-			
-		}
-		else if(timescale == "Year"){
-			
-		}
 	}
 }
