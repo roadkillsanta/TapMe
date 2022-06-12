@@ -19,7 +19,7 @@ struct ContentView: View {
 				SettingsView(settings: settings, api: API).tabItem {
 					Label("Settings", systemImage: "gear")
 				}.tag(0)
-				PressButtonView(api: API, settings: settings).tabItem {
+				SelectFidgetView(api: API, settings: settings).tabItem {
 					Label("Fidget", systemImage: "play.circle")
 				}.tag(1)
 				TrackerView(api: API).tabItem{

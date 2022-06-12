@@ -28,6 +28,7 @@ struct Response: Decodable{
 	var local : UInt64
 	var history : history
 	var registered : Bool
+	var received : Int
 }
 
 class API: ObservableObject{
@@ -39,6 +40,8 @@ class API: ObservableObject{
 	@Published var offline : Bool
 	@Published var registered : Bool
 	@Published var syncInterval : Double
+	@Published var noTrack : Bool
+	@Published var hapticSetting : String
 	var pressesSinceLastSync : Int
 	var deviceID = UIDevice.current.identifierForVendor!.uuidString
 	init(){
@@ -51,6 +54,8 @@ class API: ObservableObject{
 		self.registered = false
 		self.syncInterval = 2.5
 		self.pressesSinceLastSync = 0
+		self.noTrack = false
+		self.hapticSetting = "Light"
 		readpresses(completion: {response in
 			self.presses = response.local
 			self.globalpresses = response.global
@@ -128,17 +133,26 @@ class API: ObservableObject{
 		}
 	}
 	@objc func updateGlobal(){
-		sync(completion: {response in
-			self.globalpresses = response.global
-			self.history = response.history.data
-			self.today = response.history.last
-			self.pressesSinceLastSync = 0
-		})
+		if(!noTrack){
+			self.sync(completion: {response in
+				DispatchQueue.main.async{
+					self.globalpresses = response.global
+					self.history = response.history.data
+					self.today = response.history.last
+					self.pressesSinceLastSync -= response.received
+				}
+			})
+		}
 	}
 	func press(){
-		self.presses += 1
-		self.globalpresses += 1
-		self.pressesSinceLastSync += 1
+		if(hapticSetting != "None"){
+			Haptic.impact(HapticFeedbackStyle(rawValue: hapticStyle[hapticSetting] ?? 0) ?? .light).generate()
+		}
+		if(!noTrack){
+			self.presses += 1
+			self.globalpresses += 1
+			self.pressesSinceLastSync += 1
+		}
 	}
 	@IBAction func notify() {
 		NotificationCenter.default.post(name: Notification.Name(rawValue: "API updated!"), object: self)

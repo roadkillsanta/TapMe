@@ -14,34 +14,6 @@ struct PressButtonView: View{
 	@ObservedObject var settings : Settings
 	var currentOpacity = 0.5
 	var body : some View{
-		VStack{
-		Spacer()
-		ZStack{
-			RoundedRectangle(cornerRadius: 5)
-				.opacity(0.2)
-				.foregroundColor(settings.displayColor)
-				.frame(width: UIScreen.main.bounds.width * 1.1*settings.scale, height: 240, alignment: Alignment.center)
-			VStack{
-				Text("All Taps")
-				ZStack{
-					RoundedRectangle(cornerRadius: 5)
-						.opacity(1)
-						.foregroundColor(settings.displayColor)
-						.frame(width: UIScreen.main.bounds.width * settings.scale, height: 64)
-					Text("\(api.globalpresses)")
-						.foregroundColor(settings.txtColor)
-				}
-				Text("Your Taps")
-				ZStack{
-					RoundedRectangle(cornerRadius: 5)
-						.opacity(1)
-						.foregroundColor(settings.displayColor)
-						.frame(width: UIScreen.main.bounds.width * settings.scale, height: 64)
-					Text("\(api.presses)")
-						.foregroundColor(settings.txtColor)
-				}
-			}
-		}.padding(EdgeInsets(top: 0.16*UIScreen.main.bounds.height, leading: 0, bottom: 0, trailing: 0))
 		ZStack{
 			Circle()
 				.frame(width: UIScreen.main.bounds.width * settings.scale, height: UIScreen.main.bounds.width  * settings.scale, alignment: Alignment.center)
@@ -57,8 +29,7 @@ struct PressButtonView: View{
 				}
 			}
 			Text("Tap Me!").foregroundColor(settings.txtColor)
-		}.padding(EdgeInsets(top: 16, leading: 0, bottom: 128, trailing: 0))
-		}
+		}.padding(EdgeInsets(top: 16, leading: 0, bottom: 0, trailing: 0))
 	}
 }
 

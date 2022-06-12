@@ -20,6 +20,8 @@
 		0740969B28288BE900D7E13B /* PressButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0740969A28288BE900D7E13B /* PressButtonView.swift */; };
 		07800585282A277800F39E2E /* UpgradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07800584282A277800F39E2E /* UpgradeView.swift */; };
 		0782A577284AB9C8000E4C33 /* TrackerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0782A576284AB9C8000E4C33 /* TrackerView.swift */; };
+		07BA4BC328555EAB00B3AD2F /* FidgetSwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BA4BC228555EAB00B3AD2F /* FidgetSwitchView.swift */; };
+		07BA4BC62855699600B3AD2F /* SelectFidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BA4BC52855699600B3AD2F /* SelectFidgetView.swift */; };
 		07F3B0252853B50E00DF909A /* BarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F3B0242853B50E00DF909A /* BarChartView.swift */; };
 		5B7C1626130F282893BAE6D7 /* Pods_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27484120D51B6E255BFBBE6D /* Pods_App.framework */; };
 		717B72A56E6527175099A56F /* Pods_AppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00BA83717089F99BFDC613D0 /* Pods_AppTests.framework */; };
@@ -62,6 +64,8 @@
 		0740969A28288BE900D7E13B /* PressButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PressButtonView.swift; sourceTree = "<group>"; };
 		07800584282A277800F39E2E /* UpgradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeView.swift; sourceTree = "<group>"; };
 		0782A576284AB9C8000E4C33 /* TrackerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerView.swift; sourceTree = "<group>"; };
+		07BA4BC228555EAB00B3AD2F /* FidgetSwitchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FidgetSwitchView.swift; sourceTree = "<group>"; };
+		07BA4BC52855699600B3AD2F /* SelectFidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFidgetView.swift; sourceTree = "<group>"; };
 		07F3B0242853B50E00DF909A /* BarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartView.swift; sourceTree = "<group>"; };
 		27484120D51B6E255BFBBE6D /* Pods_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CD90C87EDAB54E65F60FE11 /* Pods-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.debug.xcconfig"; path = "Target Support Files/Pods-App/Pods-App.debug.xcconfig"; sourceTree = "<group>"; };
@@ -163,10 +167,11 @@
 		077A1D622828CE6200E6A909 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				0740969A28288BE900D7E13B /* PressButtonView.swift */,
+				07BA4BC4285568C900B3AD2F /* FidgetViews */,
 				0740969728288BCB00D7E13B /* SettingsView.swift */,
 				07800584282A277800F39E2E /* UpgradeView.swift */,
 				0782A576284AB9C8000E4C33 /* TrackerView.swift */,
+				07BA4BC52855699600B3AD2F /* SelectFidgetView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -179,6 +184,15 @@
 				07F3B0242853B50E00DF909A /* BarChartView.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		07BA4BC4285568C900B3AD2F /* FidgetViews */ = {
+			isa = PBXGroup;
+			children = (
+				0740969A28288BE900D7E13B /* PressButtonView.swift */,
+				07BA4BC228555EAB00B3AD2F /* FidgetSwitchView.swift */,
+			);
+			path = FidgetViews;
 			sourceTree = "<group>";
 		};
 		4FC582697B6971F7B3F32498 /* Frameworks */ = {
@@ -449,8 +463,10 @@
 				074096642827BEC900D7E13B /* AppApp.swift in Sources */,
 				07F3B0252853B50E00DF909A /* BarChartView.swift in Sources */,
 				074096962828777800D7E13B /* ColorRandomizer.swift in Sources */,
+				07BA4BC328555EAB00B3AD2F /* FidgetSwitchView.swift in Sources */,
 				0740969B28288BE900D7E13B /* PressButtonView.swift in Sources */,
 				074096942828417300D7E13B /* API.swift in Sources */,
+				07BA4BC62855699600B3AD2F /* SelectFidgetView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
