@@ -10,10 +10,24 @@ import SwiftUI
 struct SelectFidgetView: View {
 	@ObservedObject var api : API
 	@ObservedObject var settings : Settings
-	@State var tabState = 0
+	@State var tabState = 1
 	@State var collapseStats = false
     var body: some View {
-		VStack{
+		ZStack(alignment:.top){
+			VStack{
+			Spacer()
+			TabView(selection: $tabState) {
+				PressButtonView(api: api, settings: settings).tabItem {
+					Text("Button")
+				}.tag(0)
+				FidgetSwitchView(api: api, settings: settings, collapsed: $collapseStats).tabItem{
+					Text("Switches")
+				}.tag(1)
+				FidgetWheelView().tabItem{
+					Text("Spinner")
+				}.tag(2)
+			}.padding(EdgeInsets(top: collapseStats ? 30 : 200, leading: 10, bottom: 0, trailing: 10))
+			}
 			if(collapseStats){
 				ZStack(alignment: .topLeading){
 					ZStack{
@@ -45,7 +59,7 @@ struct SelectFidgetView: View {
 					Button(action: {collapseStats = !collapseStats}){
 						Label("", systemImage: "arrow.down")
 					}.padding(EdgeInsets(top: 10, leading: 12, bottom: 0, trailing: 0))
-				}.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+				}//.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
 			}else{
 				ZStack(alignment: .topLeading){
 					ZStack{
@@ -77,16 +91,8 @@ struct SelectFidgetView: View {
 					Button(action: {collapseStats = !collapseStats}){
 						Label("", systemImage: "arrow.up")
 					}.padding(EdgeInsets(top: 10, leading: 12, bottom: 0, trailing: 0))
-				}.padding(EdgeInsets(top: 0.02*UIScreen.main.bounds.height, leading: 0, bottom: 0, trailing: 0))
+				}.padding(EdgeInsets(top: 5, leading: 0, bottom: 0, trailing: 0))
 			}
-			TabView(selection: $tabState) {
-				PressButtonView(api: api, settings: settings).tabItem {
-					Text("Button")
-				}.tag(0)
-				FidgetSwitchView(api: api, settings: settings, collapsed: $collapseStats).tabItem{
-					Text("Switches")
-				}.tag(1)
-			}.padding()
 		}
     }
 }

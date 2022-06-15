@@ -14,8 +14,15 @@ struct FidgetSwitchView: View {
 	@State var elements = Int(round(UIScreen.main.bounds.width/60));
 	@State var toggleBindings = [Bool](repeating: false, count: 256)
     var body: some View {
-		VStack(alignment: .leading){
-			let rows = Int(round(collapsed ? UIScreen.main.bounds.height/54 : UIScreen.main.bounds.height/80));
+		VStack{
+			let rows = Int(round(collapsed ? UIScreen.main.bounds.height/57 : UIScreen.main.bounds.height*0.98/84));
+			HStack{
+			Spacer()
+			Button(action: {toggleBindings = [Bool](repeating: false, count: 256)}, label: {
+				Text("Clear")
+			})
+			Spacer()
+			}
 			ForEach((0...rows-1), id: \.self) {
 				let cRow = $0;
 				HStack{
@@ -30,7 +37,7 @@ struct FidgetSwitchView: View {
 					}
 				}
 			}
-		}.padding(EdgeInsets(top: 16, leading: 0, bottom: 0, trailing: 0))
+		}.padding(EdgeInsets(top: collapsed ? 40 : 50, leading: 0, bottom: 40, trailing: 0))
 	}
 }
 

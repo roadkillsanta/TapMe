@@ -5,22 +5,26 @@ PODS:
     - SwiftAlgorithms (~> 1.0)
   - Haptica (3.0.3)
   - SwiftAlgorithms (1.0.0)
+  - SwiftFortuneWheel (1.4.1)
 
 DEPENDENCIES:
   - Charts
   - Haptica
+  - SwiftFortuneWheel
 
 SPEC REPOS:
   trunk:
     - Charts
     - Haptica
     - SwiftAlgorithms
+    - SwiftFortuneWheel
 
 SPEC CHECKSUMS:
   Charts: d959d6723c8eedfdd0735dfc28cb0a71762ac4d9
   Haptica: 23497230b2d7476621f7860263ae0667279a0a89
   SwiftAlgorithms: 38dda4731d19027fdeee1125f973111bf3386b53
+  SwiftFortuneWheel: abfc32b8245ff058d3f714b911646837f1273cc8
 
-PODFILE CHECKSUM: 3ae4f781e5dc13dd3a42e72fbb1947cc7f84173c
+PODFILE CHECKSUM: e86d376dbbf9c4666e1910a512381631eefbaa5e
 
 COCOAPODS: 1.11.3
